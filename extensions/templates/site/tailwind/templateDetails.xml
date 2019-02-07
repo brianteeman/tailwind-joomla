@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE install PUBLIC "-//Joomla! 2.5//DTD template 1.0//EN" "https://www.joomla.org/xml/dtd/2.5/template-install.dtd">
+<extension version="3.9" type="template" client="site" method="upgrade">
+	<name>tailwind</name>
+	<creationDate>January 2019</creationDate>
+	<author>@phproberto</author>
+	<authorEmail>roberto@phproberto.com</authorEmail>
+	<authorUrl>www.phproberto.com</authorUrl>
+	<copyright>Copyright (C) 2019 Roberto Segura López. All rights reserved.</copyright>
+	<license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
+	<version>1.0.0</version>
+	<description>Tailwind CSS template for Joomla!</description>
+
+	<files>
+		<folder>assets</folder>
+		<folder>html</folder>
+		<folder>language</folder>
+		<filename>bootstrap.php</filename>
+		<filename>favicon.ico</filename>
+		<filename>index.php</filename>
+		<filename>templateDetails.xml</filename>
+	</files>
+
+	<positions>
+		<position>sticky-header</position>
+		<position>header-top</position>
+		<position>carousel</position>
+		<position>share</position>
+		<position>social</position>
+		<position>features-1</position>
+		<position>features-2</position>
+		<position>quotes</position>
+		<position>footer-1</position>
+		<position>footer-2</position>
+		<position>footer-3</position>
+		<position>menu</position>
+	</positions>
+
+	<config>
+		<fields name="params">
+			<fieldset name="basic">
+			</fieldset>
+			<fieldset name="advanced">
+			</fieldset>
+		</fields>
+	</config>
+</extension>
