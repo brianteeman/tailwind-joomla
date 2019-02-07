@@ -4,7 +4,7 @@ Start using [Tailwind CSS](https://tailwindcss.com/docs) to create fast prototyp
 
 ## Quick start.
 
-This template comes a [Gulp](https://gulpjs.com/) build system using [joomla-gulp](https://github.com/phproberto/joomla-gulp). Edit Sass, javascript files and CSS & JS files will be updated for you.
+This template comes with a [Gulp](https://gulpjs.com/) build system using [joomla-gulp](https://github.com/phproberto/joomla-gulp). Edit Sass, javascript files and CSS & JS files will be updated for you.
 
 1. Clone this repository and install the template through Joomla using Extensions > Manage > Install pointing to the folder containing your clone.
 2. Duplicate `gulp-config.dist.json` to `gulp-config.json` and update its values to point to the folder and host of the joomla site you are creating the template for.
