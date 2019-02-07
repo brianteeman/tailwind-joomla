@@ -37,7 +37,7 @@ $showNoColumns = false === $showRightColumn && false === $showLeftColumn;
 		<link href="https://fonts.googleapis.com/css?family=Bree+Serif|Open+Sans" rel="stylesheet">
 		<link rel="stylesheet" href="<?=$this->baseurl?>/templates/<?=$this->template?>/assets/css/template.min.css">
 
-		<script src="<?=$this->baseurl?>/templates/<?=$this->template?>/assets/js/scripts.js"></script>
+		<script src="<?=$this->baseurl?>/templates/<?=$this->template?>/assets/js/scripts.min.js"></script>
 	</head>
 	<body <?php if ($itemId): ?> id="item<?php echo $itemId; ?>" <?php endif; ?> class="bg-white font-source-sans font-normal text-black leading-normal <?=$bodyclass?>">
     <!-- Menu -->
