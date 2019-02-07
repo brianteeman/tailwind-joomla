@@ -32,7 +32,7 @@ bower_components
 gulp-config.json
 node_modules
 npm-debug.log
-releases
+./releases
 
 # composer
 extensions/libraries/webete/vendor/*

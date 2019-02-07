@@ -1,6 +1,18 @@
 var gulp      = require('gulp');
-var config    = require('../../../gulp-config.json');
-var extension = require('../../../package.json');
+var config    = require('./gulp-config.json');
+var extension = require('./package.json');
+
+var defaultBrowserConfig = {
+	proxy : "localhost"
+}
+
+// Keep B/C support for old browserSyncProxy setting
+if (config.hasOwnProperty('browserSyncProxy'))
+{
+	defaultBrowserConfig.proxy = config.browserSyncProxy;
+}
+
+var browserConfig = config.hasOwnProperty('browserConfig') ? config.browserConfig : defaultBrowserConfig;
 
 // Dependencies
 var beep        = require('beepbeep');
@@ -22,45 +34,76 @@ var tplBase   = "site";
 var tplFolder = 'tpl_' + tplName;
 
 var baseTask  = 'templates.frontend.' + tplName;
-var extPath   = '../extensions/templates/' + tplBase + '/' + tplName;
+var extPath   = '.';
 var mediaPath = extPath + '/media/' + tplFolder;
 var assetsPath = './media/templates/' + tplBase + '/' + tplFolder;
 var nodeModulesPath = './node_modules';
 
 var wwwPath = config.wwwDir + '/templates/' + tplName;
 
+var templateFiles = [
+	extPath + '/assets/**',
+	extPath + '/html/**',
+	extPath + '/language/**',
+	extPath + '/bootstrap.php',
+	extPath + '/favicon.ico',
+	extPath + '/index.php',
+	extPath + '/templateDetails.xml'
+];
+
 var onError = function (err) {
     beep([0, 0, 0]);
     gutil.log(gutil.colors.green(err));
 };
 
+// Browser sync
+gulp.task('browser-sync', function() {
+    return browserSync(browserConfig);
+});
+
 // Clean
-gulp.task('clean:' + baseTask,
+gulp.task('clean',
 	[
-		'clean:' + baseTask + ':template'
+		'clean:template'
 	]
 );
 
 // Clean: Template
-gulp.task('clean:' + baseTask + ':template', function() {
+gulp.task('clean:template', function() {
 	return del(wwwPath, {force : true});
 });
 
 // Copy
-gulp.task('copy:' + baseTask,
+gulp.task('copy',
 	[
-		'clean:' + baseTask,
-		'copy:' + baseTask + ':template'
+		'clean',
+		'copy:template'
 	],
 	function() {
 	});
 
 // Copy: Template
-gulp.task('copy:' + baseTask + ':template', ['clean:' + baseTask + ':template'], function() {
-	return gulp.src([
-			extPath + '/**'
-		])
+gulp.task('copy:template', ['clean:template'], function() {
+	return gulp.src(templateFiles,{ base: extPath })
 		.pipe(gulp.dest(wwwPath));
+});
+
+// Override of the release script
+gulp.task('release', function (cb) {
+	fs.readFile(extPath + '/templateDetails.xml', function(err, data) {
+		parser.parseString(data, function (err, result) {
+			var version = result.extension.version[0];
+
+			var fileName = extension.name + '-v' + version + '.zip';
+
+			return gulp.src([
+					rootPath + '/**/*'
+				],{ base: rootPath })
+				.pipe(zip(fileName))
+				.pipe(gulp.dest('releases'))
+				.on('end', cb);
+		});
+	});
 });
 
 function compileScripts(src, ouputFileName, destinationFolder) {
@@ -79,14 +122,14 @@ function compileScripts(src, ouputFileName, destinationFolder) {
 }
 
 // Scripts
-gulp.task('scripts:' + baseTask,
+gulp.task('scripts',
 	[
-		'scripts:' + baseTask + ':template'
+		'scripts:template'
 	]
 );
 
 // Scripts
-gulp.task('scripts:' + baseTask + ':template', function () {
+gulp.task('scripts:template', function () {
 
 	return compileScripts(
 		[
@@ -119,7 +162,7 @@ function compileSassFile(src, destinationFolder, options)
 }
 
 // Sass
-gulp.task('sass:' + baseTask, function () {
+gulp.task('sass', function () {
 	return compileSassFile(
 		assetsPath + '/scss/template.scss',
 		'assets/css'
@@ -127,38 +170,42 @@ gulp.task('sass:' + baseTask, function () {
 });
 
 // Watch
-gulp.task('watch:' + baseTask,
+gulp.task('watch',
 	[
-		'watch:' + baseTask + ':template',
-		'watch:' + baseTask + ':scripts',
-		'watch:' + baseTask + ':sass'
+		'watch:template',
+		'watch:scripts',
+		'watch:sass'
 	],
 	function() {
 	});
 
 // Watch: Template
-gulp.task('watch:' + baseTask + ':template', function() {
+gulp.task('watch:template', function() {
 	gulp.watch([
-			extPath + '/**/*',
-			'!' + extPath + '/assets',
-			'!' + extPath + '/assets/**/*'
+			extPath + '/html/**',
+			extPath + '/language/**',
+			extPath + '/bootstrap.php',
+			extPath + '/favicon.ico',
+			extPath + '/index.php',
+			extPath + '/templateDetails.xml'
 		],
-		['copy:' + baseTask + ':template', browserSync.reload]);
+		['copy:template', browserSync.reload]);
 });
 
 // Watch: Scripts
-gulp.task('watch:' + baseTask + ':scripts', function() {
+gulp.task('watch:scripts', function() {
 	gulp.watch([
 			assetsPath + '/js/**/*.js'
 		],
-		['scripts:' + baseTask, browserSync.reload]);
+		['scripts', browserSync.reload]);
 });
 
 // Watch: Sass
-gulp.task('watch:' + baseTask + ':sass', function() {
+gulp.task('watch:sass', function() {
 	gulp.watch([
 			assetsPath + '/scss/**/*.scss'
 		],
-		['sass:' + baseTask, browserSync.reload]);
+		['sass', browserSync.reload]);
 });
 
+gulp.task('default', ['copy', 'watch', 'browser-sync']);

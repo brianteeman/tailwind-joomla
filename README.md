@@ -6,6 +6,8 @@ Start using [Tailwind CSS](https://tailwindcss.com/docs) to create fast prototyp
 
 This template comes a [Gulp](https://gulpjs.com/) build system using [joomla-gulp](https://github.com/phproberto/joomla-gulp). Edit Sass, javascript files and CSS & JS files will be updated for you.
 
+1. Clone this repository and install the template using Extensions > Manmage > Install  pointing to 
+
 1. Duplicate `build/gulp-config.dist.json` to `build/gulp-config.json` and update its values to point to the folder and host of the joomla site you are creating the template for.
 2. Execute `npm install` inside `build` folder
 3. Execute `gulp` to start Gulp. A browser window should be launched and Gulp will start to watch any changed file to update the template files in the joomla-site.
