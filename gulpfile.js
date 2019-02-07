@@ -21,6 +21,9 @@ var cleanCSS    = require('gulp-clean-css');
 var concat      = require('gulp-concat');
 var del         = require('del');
 var gutil       = require('gulp-util');
+var fs          = require('fs');
+var xml2js      = require('xml2js');
+var parser      = new xml2js.Parser();
 var path        = require('path');
 var plumber     = require('gulp-plumber');
 var rename      = require('gulp-rename');
@@ -28,6 +31,7 @@ var postcss     = require('gulp-postcss');
 var sass        = require('gulp-sass');
 var uglify      = require('gulp-uglify');
 var tailwindcss = require('tailwindcss');
+var zip        = require('gulp-zip');
 
 var tplName   = "tailwind";
 var tplBase   = "site";
@@ -96,9 +100,7 @@ gulp.task('release', function (cb) {
 
 			var fileName = extension.name + '-v' + version + '.zip';
 
-			return gulp.src([
-					rootPath + '/**/*'
-				],{ base: rootPath })
+			return gulp.src(templateFiles,{ base: extPath })
 				.pipe(zip(fileName))
 				.pipe(gulp.dest('releases'))
 				.on('end', cb);
