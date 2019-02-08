@@ -9,6 +9,8 @@
 
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Language\Text;
+
 JHtml::_('behavior.keepalive');
 JHtml::_('behavior.formvalidator');
 
@@ -21,6 +23,7 @@ JHtml::_('behavior.formvalidator');
 			</h1>
 		</div>
 	<?php endif; ?>
+	<h2 class="mb-4"><?php echo Text::_('TPL_TAILWIND_LBL_ENTER_VERIFICATION_CODE'); ?></h2>
 	<form action="<?php echo JRoute::_('index.php?option=com_users&task=reset.confirm'); ?>" method="post" class="form-validate form-horizontal well">
 		<?php foreach ($this->form->getFieldsets() as $fieldset) : ?>
 			<?php $fields = $this->form->getFieldset($fieldset->name); ?>
