@@ -37,7 +37,6 @@ JHtml::_('behavior.formvalidator');
 						}
 						?>
 						<?php
-						$this->form->setFieldAttribute($field->name, 'tooltip', 'false');
 						$field->hint = $field->description;
 						$field->description = '';
 						$field->labelclass = 'block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2';
