@@ -29,7 +29,7 @@ JHtml::_('behavior.formvalidator');
 			<?php $fields = $this->form->getFieldset($fieldset->name); ?>
 			<fieldset>
 				<?php if (isset($fieldset->label)) : ?>
-					<p class="text-grey-dark mb-4"><?php echo JText::_($fieldset->label); ?></p>
+					<p class="text-grey-darker mb-4"><?php echo JText::_($fieldset->label); ?></p>
 				<?php endif; ?>
 				<?php foreach ($fields as $field) : ?>
 					<?php
