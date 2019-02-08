@@ -9,12 +9,17 @@
 
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Factory;
+use Joomla\CMS\Router\Route;
+
 $id = '';
 
 if (($tagId = $params->get('tag_id', '')))
 {
 	$id = ' id="' . $tagId . '"';
 }
+
+$user = Factory::getUser();
 
 $moduleClass = htmlspecialchars($params->get('moduleclass_sfx', ''), ENT_COMPAT, 'UTF-8');
 ?>
@@ -75,9 +80,16 @@ $moduleClass = htmlspecialchars($params->get('moduleclass_sfx', ''), ENT_COMPAT,
 					?>
 				<?php endforeach; ?>
 			</div>
-		<div>
-			<a href="#" class="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-teal hover:bg-white mt-4 lg:mt-0">Download</a>
-		</div>
+			<?php if (!$user->guest) : ?>
+				<div>
+					<?php
+						$profileLink = Route::_('index.php?option=com_users&view=profile');
+					?>
+					<a href="<?php echo $profileLink; ?>" class="inline-block text-sm block mt-4 lg:inline-block lg:mt-0 text-teal-lighter hover:text-white mt-4 lg:mt-0">
+						<?php echo $user->get('name'); ?>
+					</a>
+				</div>
+			<?php endif; ?>
 	  </div>
 	</div>
 </nav>
