@@ -18,7 +18,7 @@ if (empty($messages))
 }
 
 ?>
-<div class="bg-blue-lightest border-l-4 border-blue text-blue-dark p-4 relative" role="alert">
+<div class="bg-blue-lightest border-l-4 border-blue text-blue-dark p-4 relative mb-6" role="alert">
   <p class="font-bold"><?=$title?></p>
   <?php foreach ($messages as $message) : ?>
   	<p><?php echo $message; ?></p>
