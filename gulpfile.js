@@ -28,10 +28,11 @@ var path        = require('path');
 var plumber     = require('gulp-plumber');
 var rename      = require('gulp-rename');
 var postcss     = require('gulp-postcss');
+var purgecss    = require('gulp-purgecss');
 var sass        = require('gulp-sass');
 var uglify      = require('gulp-uglify');
 var tailwindcss = require('tailwindcss');
-var zip        = require('gulp-zip');
+var zip         = require('gulp-zip');
 
 var tplName   = "tailwind";
 var tplBase   = "site";
@@ -56,13 +57,13 @@ var templateFiles = [
 ];
 
 var onError = function (err) {
-    beep([0, 0, 0]);
-    gutil.log(gutil.colors.green(err));
+	beep([0, 0, 0]);
+	gutil.log(gutil.colors.green(err));
 };
 
 // Browser sync
 gulp.task('browser-sync', function() {
-    return browserSync(browserConfig);
+	return browserSync(browserConfig);
 });
 
 // Clean
@@ -142,19 +143,42 @@ gulp.task('scripts:template', function () {
 	);
 });
 
+class TailwindExtractor {
+  static extract(content) {
+    return content.match(/[A-Za-z0-9-_:\/]+/g) || [];
+  }
+}
+
 function compileSassFile(src, destinationFolder, options)
 {
 	return gulp.src(src)
 		.pipe(plumber({ errorHandler: onError }))
 		.pipe(sass())
-	    .pipe(postcss([
-	      tailwindcss('./tailwind.js'),
-	      require('autoprefixer'),
-	    ]))
+		.pipe(postcss([
+		  tailwindcss('./tailwind.js'),
+		  require('autoprefixer'),
+		]))
+		.pipe(
+		  purgecss({
+			content: [
+				extPath + '/html/**/*.php',
+				extPath + '/index.php'
+			],
+	        extractors: [
+	          {
+	            extractor: TailwindExtractor,
+
+	            // Specify the file extensions to include when scanning for
+	            // class names.
+	            extensions: ["php"]
+	          }
+	        ]
+		  })
+		)
+		.pipe(cleanCSS({compatibility: 'ie8'}))
 		.pipe(gulp.dest(extPath + '/' + destinationFolder))
 		.pipe(gulp.dest(wwwPath + '/' + destinationFolder))
 		.pipe(browserSync.reload({stream:true}))
-		.pipe(cleanCSS({compatibility: 'ie8'}))
 		.pipe(rename(function (path) {
 			path.basename += '.min';
 		}))
@@ -191,7 +215,7 @@ gulp.task('watch:template', function() {
 			extPath + '/index.php',
 			extPath + '/templateDetails.xml'
 		],
-		['copy:template', browserSync.reload]);
+		['copy:template', 'sass', browserSync.reload]);
 });
 
 // Watch: Scripts
