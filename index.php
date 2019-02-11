@@ -78,7 +78,7 @@ $showNoColumns = false === $showRightColumn && false === $showLeftColumn;
     </div>
       <div id="footer" class="bg-grey-lighter border-t border-grey-light py-6">
         <div class="w-full max-w-3xl mx-auto px-6">
-          <button type="button" class="back-to-top float-right">Back to top</button>
+          <button type="button" id="back-to-top" class="float-right">Back to top</button>
           <p>&copy; <?php echo date('Y'); ?> <?php echo $sitename; ?></p>
           <jdoc:include type="modules" name="footer" style="none" />
         </div>
