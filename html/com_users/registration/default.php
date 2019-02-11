@@ -52,7 +52,7 @@ JHtml::_('behavior.formvalidator');
 			<button class="bg-blue hover:bg-blue-dark text-white mr-6 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline validate" type="submit">
 				<?php echo JText::_('JREGISTER'); ?>
 			</button>
-			<a class="btn" href="<?php echo JRoute::_(''); ?>" title="<?php echo JText::_('JCANCEL'); ?>">
+			<a href="<?php echo JRoute::_(''); ?>" title="<?php echo JText::_('JCANCEL'); ?>">
 				<?php echo JText::_('JCANCEL'); ?>
 			</a>
 			<input type="hidden" name="option" value="com_users" />
