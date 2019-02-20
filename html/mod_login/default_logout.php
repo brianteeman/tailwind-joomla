@@ -28,7 +28,7 @@ JHtml::_('behavior.keepalive');
 	</div>
 <?php endif; ?>
 	<div class="logout-button">
-		<input type="submit" name="Submit" class="bg-grey-light hover:bg-grey text-grey-darkest py-2 px-4 my-2 rounded cursor-pointer" value="<?php echo JText::_('JLOGOUT'); ?>" />
+		<button type="submit" class="bg-grey-light hover:bg-grey text-grey-darkest py-2 px-4 my-2 rounded cursor-pointer"><?php echo JText::_('JLOGOUT'); ?></button>
 		<input type="hidden" name="option" value="com_users" />
 		<input type="hidden" name="task" value="user.logout" />
 		<input type="hidden" name="return" value="<?php echo $return; ?>" />
