@@ -2,13 +2,13 @@
 <!DOCTYPE install PUBLIC "-//Joomla! 2.5//DTD template 1.0//EN" "https://www.joomla.org/xml/dtd/2.5/template-install.dtd">
 <extension version="3.9" type="template" client="site" method="upgrade">
 	<name>tailwind</name>
-	<creationDate>January 2019</creationDate>
+	<creationDate>February 2019</creationDate>
 	<author>@phproberto</author>
 	<authorEmail>roberto@phproberto.com</authorEmail>
 	<authorUrl>www.phproberto.com</authorUrl>
 	<copyright>Copyright (C) 2019 Roberto Segura López. All rights reserved.</copyright>
 	<license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
-	<version>0.4.0</version>
+	<version>0.5.0</version>
 	<description>Tailwind CSS template for Joomla!</description>
 
 	<files>
